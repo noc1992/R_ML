@@ -47,7 +47,7 @@ as.Date("01-11-2014", format="%d-%m-%Y")
 
 as.Date(160, origin="2019-05-30")
 as.Date("2019-11-14") - Sys.Date()
-as.POSIXct("2019-05-31 09:00:00") - as.POSIXct("2019-05-30 09:44:00") 
+as.POSIXct("2019-05-31 09:00:00") - as.POSIXct("2019-05-30 09:44:00")    
 
 install.packages("lubridate")
 library(lubridate)
