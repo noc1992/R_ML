@@ -88,25 +88,3 @@ aggregate(승차+하차 ~ 노선번호, data2, sum)
 aggregate(승차 ~ 노선번호, data2, sum)
 aggregate(하차 ~ 노선번호, data2, sum)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
