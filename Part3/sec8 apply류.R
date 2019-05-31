@@ -64,8 +64,8 @@ list14 <- list(data1$X2013년)
 
 sapply(c(list1,list2,list3,list4,list5,list6,list7,list8,list9,list10,list11,list12,list13,list14), sum)
 
-apply(data1[c(1:5),c(2:13)], 2, sum) 
-apply(data1[c(0:5),c(2:15)], 1, sum)
+apply(data1[,c(2:13)], 2, sum)    # apply(data1[c(1:5),c(2:13)], 2, sum) original code
+apply(data1[,c(2:15)], 1, sum)
 apply(data1[,-1], 1, sum)
 
 
@@ -83,7 +83,7 @@ sapply(c(list01,list02), sum)
 
 sapply(data2[,c(3,4)], sum)
 
-aggregate(승차+하차 ~ 노선번호, data2, sum)
+aggregate(승차+하차 ~ 노선번호, data2, sum)         # simple thinking '+'
 
 aggregate(승차 ~ 노선번호, data2, sum)
 aggregate(하차 ~ 노선번호, data2, sum)
