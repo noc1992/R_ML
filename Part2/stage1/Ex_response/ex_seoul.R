@@ -52,3 +52,4 @@ data3
 
 
 data3 <- Filter(function(x) {nchar >= 2}, data3)
+
