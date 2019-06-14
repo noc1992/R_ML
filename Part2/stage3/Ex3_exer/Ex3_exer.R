@@ -119,6 +119,9 @@ ggplot(df01,aes(x=노선번호,y=인원/1000,fill=기준)) +
 
 data001 <- read.csv("data/마포09번이용현황.csv")
 data001
+fcdata <- factor(data001$정류소명)
+sapply(fcdata[1,32],)
+fcdata
 
 df001 <- melt(data001, id.vars = 1)
 colnames(df001) <- c("정류소명","기준","인원")
