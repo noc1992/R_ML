@@ -1,0 +1,93 @@
+# caret
+library(caret)
+
+iris
+table(iris)
+
+idx = sample(1:nrow(iris), size = nrow(iris)*0.7, replace = F)
+idx
+
+iris_train=iris[idx,]
+iris_test=iris[-idx,]
+str(iris_train)
+dim(iris_test)
+table(iris_train$Species)
+
+train.idx<-createDataPartition(iris$Species, p=0.7, list=F)
+iris_train1 = iris[train.idx,]
+iris_test1 = iris[-train.idx,]
+
+# knn
+library(class)
+like = read.csv("like.csv",stringsAsFactors = F, header = T)
+
+colnames(like) <- c('talk','book','travel','school','tall','skin','muscle','pref')
+head(like)
+
+test <- data.frame(talk=70, book=50, travel=40, school=100, tall=60, skin=80, muscle=70)
+
+train <- like[,-8]
+group <- like[,8]
+knnpred1<-knn(train, test, group, k=3,prob=T)
+knnpred2<-knn(train, test, group, k=4, prob = T)
+knnpred1
+knnpred2
+
+# nnet
+library(e1071)
+library(caret)
+library(nnet)
+
+train_rt = naiveBayes(iris_train1, iris_train1$Species, laplace = 1)
+naive_pdt= predict(train_rt, iris_test1, type='class')
+table(naive_pdt, iris_test1$Species)
+
+confusionMatrix(naive_pdt,iris_test1$Species)
+
+multi_re <- multinom(Species~., iris_test1)
+multi_pred <- predict(multi_re, iris_test1)
+
+table(multi_pred, iris_test1$Species)
+
+library(caret)
+idx <- createDataPartition(iris$Species, p=0.7, list=F)
+iris_train<-iris[idx, ]
+iris_test<-iris[-idx, ]
+
+# Dicision tree
+library(rpart)
+
+rpart_rt=rpart(Species~.,iris_train)
+rpart_pdt=predict(rpart_rt, iris_test, type='class')
+confusionMatrix(iris_test$Species, rpart_pdt)
+
+# ANN
+library(nnet)
+iris_train_scale=as.data.frame(sapply(iris_train[,-5], scale))
+iris_test_scale=as.data.frame(sapply(iris_test[,-5],scale))
+iris_train_scale$Species=iris_train$Species
+iris_test_scale$Species=iris_test$Species
+
+nnet_rlt=nnet(Species~.,iris_train_scale, size=3)
+
+# SVM
+library(kernlab)
+svm_rt=ksvm(Species~., iris_train, kernal='rbfdot')
+svm_pdt=predict(svm_rt, iris_test, type='response')
+kk = table(svm_pdt, iris_test$Species)
+confusionMatrix(svm_pdt, iris_test$Species)
+
+
+# confusionMatrix
+accurecy=c(accurecy=(kk[1,1] + kk[2,2] + kk[3,3]) / sum(kk))
+accurecy           
+
+# Random forest
+install.packages("randomForest")
+library(randomForest)
+rf_rt=randomForest(Species~., iris_train,ntree=500)
+rf_pdt=predict(rf_rt, iris_test, type='response')
+kk1 = table(rf_pdt, iris_test$Species)
+accurecy1=c(accurecy1=(kk1[1,1] + kk1[2,2] + kk1[3,3]) / sum(kk1))
+accurecy1           
+
