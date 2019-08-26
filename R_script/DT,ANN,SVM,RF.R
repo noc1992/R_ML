@@ -18,6 +18,8 @@ iris_train_scale$Species=iris_train$Species
 iris_test_scale$Species=iris_test$Species
 
 nnet_rlt=nnet(Species~.,iris_train_scale, size=3)
+nnet_pred<-predict(nnet_rlt, iris_test_scale, type='class')
+table(nnet_pred, iris_test$Species)
 
 # SVM
 library(kernlab)
