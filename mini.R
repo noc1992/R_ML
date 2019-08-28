@@ -1,26 +1,37 @@
 library(dplyr)
 library(arules)
+library(tibble)
 library(arulesViz)
 
 raw <- read.csv("Data/sparkle.csv")
 View(raw)
 
 data <- raw[2:10]
-View(ym9)
+write.csv(data, file = "Sparkle.csv")
+View(ym)
 
-ym <- summarise(group_by(data, MAXTEMP, RAIN_DAY,PRICE, YM,HOLIDAY))
+ym <- summarise(group_by(data, HOLIDAY, ITEM_CNT, PRICE, RAIN_DAY, MAXTEMP, YM , SALEDAY))
+ymq <- summarise(group_by(data, HOLIDAY, ITEM_CNT, PRICE, RAIN_DAY, MAXTEMP, YM , SALEDAY, QTY))
+
 
 pc1 <- princomp(ym, cor=T)
 summary(pc1)
-pc1$center
 pc1$loadings
 
+pc2 <- princomp(ymq, cor=T)
+summary(pc2)
+pc2$loadings
+
+
+sparkle <- as.data.frame(data)
 inspect(sparkle)
 summary(data)
-sparkle <- as.data.frame(data)
 
-apriori(data)
-result_data <- apriori(sparkle, parameter = list(support=0.005, confidence=0.5, minlen=2))
+summary(sparkle)
+
+apriori(sparkle)
+result_data <- apriori(sparkle)   
+
 
 summary(result_data)
 inspect(result_data)
@@ -28,6 +39,8 @@ inspect(result_data)
 rules_lift <- sort(result_data,by='lift', decreasing = T)
 inspect(rules_lift[1:7])
 
+Qty_rule <- apriori(sparkle, appearance = list(default='lhs',rhs=QTY))
+Qty_rule <- sort(Qty_rule,by='lift', decreasing = T )
 
 
 
