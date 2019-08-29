@@ -6,9 +6,10 @@ library(arulesViz)
 raw <- read.csv("Data/sparkle.csv")
 View(raw)
 
+
 data <- raw[2:10]
 write.csv(data, file = "Sparkle.csv")
-View(ym)
+View(data)
 
 ym <- summarise(group_by(data, HOLIDAY, ITEM_CNT, PRICE, RAIN_DAY, MAXTEMP, YM , SALEDAY))
 ymq <- summarise(group_by(data, HOLIDAY, ITEM_CNT, PRICE, RAIN_DAY, MAXTEMP, YM , SALEDAY, QTY))
@@ -39,8 +40,7 @@ inspect(result_data)
 rules_lift <- sort(result_data,by='lift', decreasing = T)
 inspect(rules_lift[1:7])
 
-Qty_rule <- apriori(sparkle, appearance = list(default='lhs',rhs=QTY))
-Qty_rule <- sort(Qty_rule,by='lift', decreasing = T )
+
 
 
 
